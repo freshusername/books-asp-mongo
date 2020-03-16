@@ -23,6 +23,10 @@ namespace books_api.Services
         public List<Book> Get() =>
             _books.Find(book => true).ToList();
 
+        public List<Book> GetBooksByShelfId(string shelfId) =>
+            _books.Find(book => book.ShelfId == shelfId).ToList();
+
+
         public Book Get(string id) =>
             _books.Find<Book>(book => book.Id == id).FirstOrDefault();
 

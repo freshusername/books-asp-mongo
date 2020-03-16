@@ -35,6 +35,7 @@ namespace books_api
                 sp.GetRequiredService<IOptions<BooksDbSettings>>().Value);
 
             services.AddSingleton<BookService>();
+            services.AddSingleton<ShelfService>();
 
             services.AddControllers();
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace books_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class BooksController : ControllerBase
     {
@@ -23,10 +23,23 @@ namespace books_api.Controllers
         public ActionResult<List<Book>> Get() =>
             _bookService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetBook")]
-        public ActionResult<Book> Get(string id)
+        [HttpGet("{id:length(24)}")]
+        public ActionResult<Book> GetById(string id)
         {
             var book = _bookService.Get(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return book;
+        }
+
+        [HttpGet]
+        public ActionResult<List<Book>> GetByShelfId([FromQuery]string shelfId)
+        {
+            var book = _bookService.GetBooksByShelfId(shelfId);
 
             if (book == null)
             {

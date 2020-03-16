@@ -7,22 +7,14 @@ using System.Threading.Tasks;
 
 namespace books_api.Models
 {
-    public class Book
+    public class Shelf
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string ShelfId { get; set; }
-
         [BsonElement("Name")]
-        public string BookName { get; set; }
+        public string ShelfName { get; set; }
 
-        public decimal Price { get; set; }
-
-        public string Category { get; set; }
-
-        public string Author { get; set; }
     }
 }
