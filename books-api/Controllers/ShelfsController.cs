@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using books_api.Models;
 using books_api.Services;
 using books_api.Services.LookupModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
@@ -36,8 +32,8 @@ namespace books_api.Controllers
         public ActionResult GetWithBooksBson()
         {
             var x = _shelfService.GetWithBooksBson();
-            var res = x.ToJson(new MongoDB.Bson.IO.JsonWriterSettings { OutputMode = MongoDB.Bson.IO.JsonOutputMode.Strict });
-            return Content(res);
+            var res = x.ToJson();
+            return Ok(res);
         }
     }
 }

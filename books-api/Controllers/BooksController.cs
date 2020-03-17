@@ -1,10 +1,7 @@
 ﻿using books_api.Models;
 using books_api.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace books_api.Controllers
 {

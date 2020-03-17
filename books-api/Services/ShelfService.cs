@@ -3,10 +3,8 @@ using books_api.Models;
 using books_api.Services.LookupModels;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace books_api.Services
 {
@@ -14,11 +12,9 @@ namespace books_api.Services
     {
         private readonly IMongoCollection<Shelf> _shelfs;
         private readonly IMongoCollection<Book> _books;
-        //private readonly IMongoDatabase _db; 
 
-        public ShelfService(IBooksDbSettings settings) //, IMongoDatabase db)
+        public ShelfService(IBooksDbSettings settings)
         {
-            //_db = db;
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
@@ -31,22 +27,21 @@ namespace books_api.Services
 
         public List<ShelfWithBooks> GetWithBooks() 
         {
-            //var books = _db.GetCollection<Book>("Books");
-            List<ShelfWithBooks> res = _shelfs.Aggregate()
+            List<ShelfWithBooks> r = _shelfs.Aggregate()
                                 .Lookup<Shelf, Book, ShelfWithBooks>(
                                     _books,
                                     sh => sh.Id,
                                     b => b.ShelfId,
-                                    b_wz_sh => b_wz_sh.Books)
+                                    sh_b => sh_b.Books)
                                 .ToList();
+            var res = r;
             return res;
         }
 
         public List<BsonDocument> GetWithBooksBson() 
         {
-            //var books = _db.GetCollection<Book>("Books");
            List<BsonDocument> r = _shelfs.Aggregate()
-                                .Lookup("Books", "_id", "ShelfId", "shelf_with_books")
+                                .Lookup("Books", "_id", "ShelfId", "books_lookup")
                                 .ToList();
 
             var res = r;
